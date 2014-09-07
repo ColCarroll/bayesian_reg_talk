@@ -1,0 +1,9 @@
+div .eqnbox{
+    font-size: 36pt;
+    border: 10px white solid;
+    border-radius: 40px;
+}
+
+.graph {
+    data-background-size: contain;
+}

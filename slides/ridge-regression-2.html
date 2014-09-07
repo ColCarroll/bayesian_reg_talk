@@ -1,0 +1,13 @@
+<h2>More priors</h2>
+Using Bayes' theorem
+$$
+p(\mathbf{w} | \mathscr{D}, \tau) \propto p(\mathscr{D} | \mathbf{w}, \tau) p(\mathbf{w}| \tau)
+$$
+        <br>
+$$
+\begin{align}
+-\log{\left(p(\mathbf{w} | \mathscr{D}, \tau)\right)} &\propto -\log{\left(p(\mathscr{D} | \mathbf{w}, \tau)\right)} - \log{\left(p(\mathbf{w}, \tau)\right)} \\
+&= \frac{\sum (y_j - \mathbf{w} \cdot \mathbf{x}_j)^2}{2 \sigma^2} - \log{\left(p(\mathbf{w}, \tau)\right)}
+\end{align}
+$$
+

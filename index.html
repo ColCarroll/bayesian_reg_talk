@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Random Variables</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.min.css">
+    
+        <link rel="stylesheet" href="bower_components/reveal.js/css/theme/default.css" id="theme">
+        <!-- custom css -->
+        <link rel="stylesheet" href="css/custom.css">
+
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css" id="highlight-theme">
+
+        <!-- MathJax -->
+        <script src="bower_components/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+          document.write( '<link rel="stylesheet" href="bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <div class="slides">
+
+                
+                    
+                        
+    <section data-html="slides/index.html"></section>
+
+
+                    
+                    
+                
+                    
+                        
+    <section data-html="slides/spacerex.html"></section>
+
+
+                    
+                    
+                
+                    
+                        
+    <section data-html="slides/linear-regression.html"></section>
+
+
+                    
+                    
+                
+                    
+                        
+    <section data-background="static/height_weight.png" data-background-size="contain" ></section>
+
+
+                    
+                    
+                
+                    
+                    
+                        <section>
+                            
+                                
+    <section data-html="slides/setup.html"></section>
+
+
+                            
+                                
+    <section data-html="slides/advanced-setup.html"></section>
+
+
+                            
+                                
+    <section data-html="slides/advanced-setup-2.html"></section>
+
+
+                            
+                                
+    <section data-background="static/poly.png" data-background-size="contain" ></section>
+
+
+                            
+                                
+    <section data-background="static/sigma.png" data-background-size="contain" ></section>
+
+
+                            
+                                
+    <section data-background="static/gauss.png" data-background-size="contain" ></section>
+
+
+                            
+                        </section>
+                    
+                
+                    
+                        
+    <section data-html="slides/cost-function.html"></section>
+
+
+                    
+                    
+                
+                    
+                    
+                        <section>
+                            
+                                
+    <section data-html="slides/motivating-loss-functionw.html"></section>
+
+
+                            
+                                
+    <section data-html="slides/normal-distribution.html"></section>
+
+
+                            
+                                
+    <section data-html="slides/why-normal.html"></section>
+
+
+                            
+                        </section>
+                    
+                
+                    
+                        
+    <section data-html="slides/motivating-loss-function-2.html"></section>
+
+
+                    
+                    
+                
+                    
+                        
+    <section data-html="slides/motivating-loss-function-3.html"></section>
+
+
+                    
+                    
+                
+                    
+                    
+                        <section>
+                            
+                                
+    <section data-html="slides/ridge-regression.html"></section>
+
+
+                            
+                                
+    <section data-html="slides/laplace-distribution.html"></section>
+
+
+                            
+                        </section>
+                    
+                
+                    
+                    
+                        <section>
+                            
+                                
+    <section data-html="slides/ridge-regression-2.html"></section>
+
+
+                            
+                                
+    <section data-html="slides/lp.html"></section>
+
+
+                            
+                        </section>
+                    
+                
+                    
+                        
+    <section data-html="slides/ridge-regression-3.html"></section>
+
+
+                    
+                    
+                
+                    
+                        
+    <section data-html="slides/lasso-regression.html"></section>
+
+
+                    
+                    
+                
+                    
+                        
+    <section data-html="slides/polynomial-basis-functions.html"></section>
+
+
+                    
+                    
+                
+            </div>
+
+        </div>
+
+        <script src="bower_components/reveal.js/lib/js/head.min.js"></script>
+        <script src="bower_components/reveal.js/js/reveal.min.js"></script>
+        <script>
+            // Configure Reveal
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'bower_components/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'bower_components/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'bower_components/reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    //{ src: 'bower_components/reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+
+                    { src: 'js/loadhtmlslides.js', condition: function() { return !!document.querySelector( '[data-html]' ); } },
+                    { src: 'bower_components/MathJax/MathJax.js', async: true }
+                ]
+            });
+        </script>
+
+    </body>
+
+</html>
