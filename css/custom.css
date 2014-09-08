@@ -7,3 +7,17 @@ div .eqnbox{
 .graph {
     data-background-size: contain;
 }
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+.axis text{
+    fill: #fff;
+    font: 14px sans-serif;
+}
+
+.dot {
+  stroke: none;
+}

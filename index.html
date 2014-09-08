@@ -1,259 +1,283 @@
 <!doctype html>
-<html lang="en">
+<html class="reveal">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 
-    <head>
-        <meta charset="utf-8">
+    <title>
+        Bayesian Linear Regression
+    </title>
 
-        <title>Random Variables</title>
+    <!--
+      <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    -->
 
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Reveal -->
+    <link rel="stylesheet" type="text/css" href="css/reveal.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/reveal-theme.css" />
+    <script type="text/javascript" src="js/reveal.min.js"></script>
+    <!-- D3js -->
+    <script type="text/javascript" src="js/d3.min.js"></script>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- AngularJS -->
+    <script type="text/javascript" src="js/underscore.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
 
-        <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.min.css">
-    
-        <link rel="stylesheet" href="bower_components/reveal.js/css/theme/default.css" id="theme">
-        <!-- custom css -->
-        <link rel="stylesheet" href="css/custom.css">
+    <!-- Talk -->
+    <link rel="stylesheet" type="text/css" href="css/custom.css" />
+    <script type="text/javascript" src="js/talk.js"></script>
+    <link rel="stylesheet" href="css/zenburn.css" id="highlight-theme">
+    <script src="js/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
+</head>
 
-        <!-- For syntax highlighting -->
-        <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css" id="highlight-theme">
+<body ng-app="linregTalk" ng-controller="TalkCtrl" talk-slides>
 
-        <!-- MathJax -->
-        <script src="bower_components/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<section>
+    <h2>A Bayesian Approach to \(L^1\) and \(L^2\) Regularization in Machine Learning</h2>
+    <h3>Colin Carroll</h3>
+    <h5>Spiceworks</h5>
+</section>
 
-        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
-        <script>
-          document.write( '<link rel="stylesheet" href="bower_components/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-        </script>
+<section data-background="/static/max_height.jpg" data-background-size="cover"></section>
 
-        <!--[if lt IE 9]>
-        <script src="lib/js/html5shiv.js"></script>
-        <![endif]-->
-    </head>
+<section>
+    <section>
+        <h2>Linear Regression</h2>
+        <ul>
+            <li>
+                <em>Regression</em> task: will predict a real-valued output
+            </li>
+            <li>
+                Don't be fooled by the word <em>linear</em>: it's actually cool
+            </li>
+            <li>
+                Quite useful on its own, and forms the basis for methods with sexier names
+            </li>
+        </ul>
+    </section>
+    <section>
+        <plot-points point-data="data"></plot-points>
+        <input ng-model="parameters.noise" type="number" min="0" max="2" step="0.05" ng-change="updateData()">
+    </section>
+</section>
 
-    <body>
+<section data-background="static/height_weight.png" data-background-size="contain" ></section>
 
-        <div class="reveal">
+<section>
 
-            <div class="slides">
+    <section>
+        <h2>Setup</h2>
+        <div class="eqnbox">
+            <br>
+            $$y(\mathbf{x}, \mathbf{w}) = w_0 + x_1 w_1 + \cdots + w_Dx_D$$
+            <br>
+        </div>
+        <ul>
+            <li>
+                \(\mathbf{x} = (x_1, \ldots, x_D)\) are called <em>features</em>
+            </li>
+            <li>
+                \(\mathbf{w} = (w_0, \ldots, w_D)\) are called <em>weights</em>
+            </li>
+        </ul>
+    </section>
 
-                
-                    
-                        
-    <section data-html="slides/index.html"></section>
+    <section>
+        <h2>Advanced Setup</h2>
 
-
-                    
-                    
-                
-                    
-                        
-    <section data-html="slides/spacerex.html"></section>
-
-
-                    
-                    
-                
-                    
-                        
-    <section data-html="slides/linear-regression.html"></section>
-
-
-                    
-                    
-                
-                    
-                        
-    <section data-background="static/height_weight.png" data-background-size="contain" ></section>
-
-
-                    
-                    
-                
-                    
-                    
-                        <section>
-                            
-                                
-    <section data-html="slides/setup.html"></section>
-
-
-                            
-                                
-    <section data-html="slides/advanced-setup.html"></section>
-
-
-                            
-                                
-    <section data-html="slides/advanced-setup-2.html"></section>
-
-
-                            
-                                
-    <section data-background="static/poly.png" data-background-size="contain" ></section>
-
-
-                            
-                                
-    <section data-background="static/sigma.png" data-background-size="contain" ></section>
-
-
-                            
-                                
-    <section data-background="static/gauss.png" data-background-size="contain" ></section>
-
-
-                            
-                        </section>
-                    
-                
-                    
-                        
-    <section data-html="slides/cost-function.html"></section>
-
-
-                    
-                    
-                
-                    
-                    
-                        <section>
-                            
-                                
-    <section data-html="slides/motivating-loss-functionw.html"></section>
-
-
-                            
-                                
-    <section data-html="slides/normal-distribution.html"></section>
-
-
-                            
-                                
-    <section data-html="slides/why-normal.html"></section>
-
-
-                            
-                        </section>
-                    
-                
-                    
-                        
-    <section data-html="slides/motivating-loss-function-2.html"></section>
-
-
-                    
-                    
-                
-                    
-                        
-    <section data-html="slides/motivating-loss-function-3.html"></section>
-
-
-                    
-                    
-                
-                    
-                    
-                        <section>
-                            
-                                
-    <section data-html="slides/ridge-regression.html"></section>
-
-
-                            
-                                
-    <section data-html="slides/laplace-distribution.html"></section>
-
-
-                            
-                        </section>
-                    
-                
-                    
-                    
-                        <section>
-                            
-                                
-    <section data-html="slides/ridge-regression-2.html"></section>
-
-
-                            
-                                
-    <section data-html="slides/lp.html"></section>
-
-
-                            
-                        </section>
-                    
-                
-                    
-                        
-    <section data-html="slides/ridge-regression-3.html"></section>
-
-
-                    
-                    
-                
-                    
-                        
-    <section data-html="slides/lasso-regression.html"></section>
-
-
-                    
-                    
-                
-                    
-                        
-    <section data-html="slides/polynomial-basis-functions.html"></section>
-
-
-                    
-                    
-                
-            </div>
-
+        <div class="eqnbox">
+            $$y(\mathbf{x}, \mathbf{w}) = w_0 + \sum_{j=1}^N w_j \phi_j(\mathbf{x})$$
         </div>
 
-        <script src="bower_components/reveal.js/lib/js/head.min.js"></script>
-        <script src="bower_components/reveal.js/js/reveal.min.js"></script>
-        <script>
-            // Configure Reveal
-            // Full list of configuration options available here:
-            // https://github.com/hakimel/reveal.js#configuration
-            Reveal.initialize({
-                controls: true,
-                progress: true,
-                history: true,
-                center: true,
+        <ul>
+            <li>
+                \(\phi_j: \mathbb{R}^D \to \mathbb{R}\) is called a <em>basis function</em>
+            </li>
+            <li>
+                \(\phi_0(\mathbf{x}) := 1\), so that
+            </li>
+        </ul>
 
-                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
-                math: {
-                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
-                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
-                },
+        <div style="font-size: 36pt;">
+            $$ y = \phi(\mathbf{x}) \cdot \mathbf{w}$$
+        </div>
+    </section>
 
-                // Optional libraries used to extend on reveal.js
-                dependencies: [
-                    { src: 'bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-                    { src: 'bower_components/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-                    { src: 'bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-                    { src: 'bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-                    { src: 'bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-                    { src: 'bower_components/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-                    // { src: 'bower_components/reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
-                    //{ src: 'bower_components/reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+    <section data-background="static/poly.png" data-background-size="contain" ></section>
 
-                    { src: 'js/loadhtmlslides.js', condition: function() { return !!document.querySelector( '[data-html]' ); } },
-                    { src: 'bower_components/MathJax/MathJax.js', async: true }
-                ]
-            });
-        </script>
+    <section data-background="static/sigma.png" data-background-size="contain" ></section>
 
-    </body>
+    <section data-background="static/gauss.png" data-background-size="contain" ></section>
+
+</section>
+
+<section>
+
+    <h2>Loss Function</h2>
+
+    <ul>
+        <li>
+            Given data \(\{(y_1, \mathbf{x}_1),\ldots,(y_D, \mathbf{x}_D)\}\), find weights
+            \(\mathbf{w} = (w_1, \ldots, w_N)\) to minimize
+            $$
+            loss(\mathbf{w}) = \sum_{j=1}^D (y_j - \mathbf{w} \cdot \mathbf{x}_j)^2
+            $$
+        </li>
+        <li>
+            How is this loss function motivated?
+        </li>
+    </ul>
+</section>
+
+
+<section>
+
+    <section>
+
+        <h2>Motivating Loss Function</h2>
+        <div class="eqnbox">
+            <br>
+            $$y(\mathbf{x}, \mathbf{w}) = \mathbf{w} \cdot \mathbf{x} + \mathscr{N}(0, \sigma^2)$$
+            <br>
+        </div>
+        The <em>likelihood</em> is given by
+        <div class="eqnbox">
+            <br>
+            $$p(y | \mathbf{x}, \mathbf{w}) \propto \exp{\left(-\frac{(y - \mathbf{w} \cdot \mathbf{x})^2}{2 \sigma^2}\right)}$$
+            <br>
+        </div>
+    </section>
+
+    <section>
+
+        <h2>Normal Distribution</h2>
+
+        <ul>
+            <li>
+                \(\mathscr{N}(x | \mu, \sigma) = \frac{1}{\sigma \sqrt{2 \pi}}e^{-\frac{(x - \mu)^2}{2 \sigma^2}}\)
+            </li>
+            <li>
+                \(\mu\) is the mean, \(\sigma\) is the standard deviation (these are theorems, not definitions)
+            </li>
+            <li>
+                \(\mathscr{N}(\mu, \sigma)\) is a random variable with mean \(\mu\), variance \(\sigma^2\)
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Why the normal distribution?</h2>
+        Something something something central limit theorem. Analytically tractable.  Gives least squares.
+    </section>
+
+</section>
+
+<section>
+    <h2>Motivating Loss Function</h2>
+    $$\mathscr{D} = \{(y_1, \mathbf{x}_1), \ldots, (y_N, \mathbf{x}_N)\}$$
+    <div class="eqnbox">
+        $$
+        \begin{align}
+        p(\mathscr{D} | \mathbf{w}) &= \prod_{j=1}^N p(y_j | \mathbf{x}_j, \mathbf{w}) \\
+        & \propto \exp{\sum_{j=1}^N -\frac{(y_j - \mathbf{w} \cdot \mathbf{x_j})^2}{2 \sigma^2}}
+        \end{align}
+        $$
+    </div>
+</section>
+
+<section>
+    <h2>Motivating Loss Function</h2>
+    Maximizing $$\exp{\sum_{j=1}^N -\frac{(y_j - \mathbf{w} \cdot \mathbf{x_j})^2}{2 \sigma^2}}$$
+    is equivalent to mimimizing
+    $$ \sum_{j=1}^N (y_j - \mathbf{w} \cdot \mathbf{x_j})^2 $$
+</section>
+
+<section>
+
+    <section>
+        <h2>More priors</h2>
+        What if we had some <em>prior expectations</em> about the weights of the model?
+        <ul>
+            <li>
+                If we expect the weights to all be fairly small, we might write \(\mathbf{w} \sim \mathscr{N}(0, \tau)\),
+                where \(\tau\) is a measure of how small we expect the weights to be.
+            </li>
+            <li>
+                We might also write \(\mathbf{w} \sim \text{Laplace}(0, \tau)\),
+                where \(\tau\) is again again a scale parameter.
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Laplace Distribution</h2>
+        <ul>
+            <li>
+                \(\text{Laplace}(x | \mu, \tau) = \frac{1}{2\tau}e^{-\frac{|x - \mu|}{\tau}}\)
+            </li>
+            <li>
+                \(\mu\) is the mean, \(\tau\sqrt{2}\) is the standard deviation
+            </li>
+        </ul>
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>More priors</h2>
+        Using Bayes' theorem
+        $$
+        p(\mathbf{w} | \mathscr{D}, \tau) \propto p(\mathscr{D} | \mathbf{w}, \tau) p(\mathbf{w}| \tau)
+        $$
+        <br>
+        $$
+        \begin{align}
+        -\log{\left(p(\mathbf{w} | \mathscr{D}, \tau)\right)} &\propto -\log{\left(p(\mathscr{D} | \mathbf{w}, \tau)\right)} - \log{\left(p(\mathbf{w}, \tau)\right)} \\
+        &= \frac{\sum (y_j - \mathbf{w} \cdot \mathbf{x}_j)^2}{2 \sigma^2} - \log{\left(p(\mathbf{w}, \tau)\right)}
+        \end{align}
+        $$
+    </section>
+
+    <section>
+        <h2>The \(\ell^p\) norm</h2>
+        <ul>
+            <li>
+                For a vector \(\mathbf{x} = \{x_1, \ldots, x_N\}\), the \(\ell^p\)-norm of \(\mathbf{x}\) is
+                $$
+                \|\mathbf{x}\|_p = \left(\sum_{j=1}^N |x_j|^p\right)^{\frac{1}{p}}
+                $$
+            </li>
+            <li>
+                \(\|\mathbf{x}\|_1\) is the sum of the absolute values
+            </li>
+        </ul>
+    </section>
+
+</section>
+
+<section>
+    <h2>Ridge Regression</h2>
+    $$
+    p(\mathbf{w}, \tau) \propto \exp{\left(-\frac{\|\mathbf{w}\|_2^2}{2\tau^2}\right)}
+    $$
+    $$
+    loss(w) = \|\mathbf{y} - \mathbf{X}\mathbf{w}^T\|^2 + \left(\frac{\sigma}{\tau}\right)^2\|\mathbf{w}\|_2^2
+    $$
+</section>
+<section>
+    <h2>Lasso Regression</h2>
+    $$
+    p(\mathbf{w}, \tau) \propto \exp{\left(-\frac{\|\mathbf{w}\|_1}{\tau}\right)}
+    $$
+    $$
+    loss(w) = \|\mathbf{y} - \mathbf{X}\mathbf{w}^T\|^2 + \frac{2\sigma^2}{\tau}\|\mathbf{w}\|_2^2
+    $$
+</section>
+
+
+</body>
 
 </html>
