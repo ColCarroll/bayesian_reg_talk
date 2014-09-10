@@ -12,22 +12,22 @@
     -->
 
     <!-- Reveal -->
-    <link rel="stylesheet" type="text/css" href="css/reveal.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/reveal-theme.css" />
-    <script type="text/javascript" src="js/reveal.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/reveal.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/reveal-theme.css" />
+    <script type="text/javascript" src="/js/reveal.min.js"></script>
     <!-- D3js -->
-    <script type="text/javascript" src="js/d3.min.js"></script>
+    <script type="text/javascript" src="/js/d3.min.js"></script>
 
     <!-- AngularJS -->
-    <script type="text/javascript" src="js/underscore.min.js"></script>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="/js/underscore.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/angular.min.js"></script>
 
     <!-- Talk -->
-    <link rel="stylesheet" type="text/css" href="css/custom.css" />
-    <script type="text/javascript" src="js/talk.js"></script>
-    <link rel="stylesheet" href="css/zenburn.css" id="highlight-theme">
-    <script src="js/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+    <script type="text/javascript" src="/js/talk.js"></script>
+    <link rel="stylesheet" href="/css/zenburn.css" id="highlight-theme">
+    <script src="/js/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 </head>
 
@@ -39,7 +39,12 @@
     <h5>Spiceworks</h5>
 </section>
 
-<section data-background="/static/max_height.jpg" data-background-size="cover"></section>
+<section>
+    <section>
+        <img src="/spiceworks.png">
+    </section>
+    <section data-background="/max_height.jpg" data-background-size="cover"></section>
+</section>
 
 <section>
     <section>
@@ -56,13 +61,7 @@
             </li>
         </ul>
     </section>
-    <section>
-        <plot-points point-data="data"></plot-points>
-        <input ng-model="parameters.noise" type="number" min="0" max="2" step="0.05" ng-change="updateData()">
-    </section>
 </section>
-
-<section data-background="static/height_weight.png" data-background-size="contain" ></section>
 
 <section>
 
@@ -75,10 +74,10 @@
         </div>
         <ul>
             <li>
-                \(\mathbf{x} = (x_1, \ldots, x_D)\) are called <em>features</em>
+                \(\mathbf{x} = (x_1, \ldots, x_D) \in \mathbb{R}^D \) are called <em>features</em>
             </li>
             <li>
-                \(\mathbf{w} = (w_0, \ldots, w_D)\) are called <em>weights</em>
+                \(\mathbf{w} = (w_0, \ldots, w_D) \in \mathbb{R}^D \) are called <em>weights</em>
             </li>
         </ul>
     </section>
@@ -87,7 +86,7 @@
         <h2>Advanced Setup</h2>
 
         <div class="eqnbox">
-            $$y(\mathbf{x}, \mathbf{w}) = w_0 + \sum_{j=1}^N w_j \phi_j(\mathbf{x})$$
+            $$y(\mathbf{x}, \mathbf{w}) = w_0 + \sum_{j=1}^n w_j \phi_j(\mathbf{x})$$
         </div>
 
         <ul>
@@ -104,32 +103,132 @@
         </div>
     </section>
 
-    <section data-background="static/poly.png" data-background-size="contain" ></section>
+    <section>
+        <plot-line point-data="polynomial" xkey="x" ykey="y"></plot-line>
+        $$ \phi(x) = x^2 $$
+    </section>
 
-    <section data-background="static/sigma.png" data-background-size="contain" ></section>
-
-    <section data-background="static/gauss.png" data-background-size="contain" ></section>
+    <section>
+        <plot-line point-data="sigmoid" xkey="x" ykey="y"></plot-line>
+        $$ \phi(x) = \frac{1}{1 + e^{-5x}} $$
+    </section>
+    <section>
+        <plot-line point-data="gaussian" xkey="x" ykey="y"></plot-line>
+        $$ \phi(x) = e^{\frac{x^2}{0.5^2}} $$
+    </section>
 
 </section>
 
 <section>
 
-    <h2>Loss Function</h2>
+    <section>
+        <h2>Loss Function</h2>
+
+        Given data \(\{(y_1, \mathbf{x}_1),\ldots,(y_D, \mathbf{x}_D)\}\), find weights
+        \(\mathbf{w} = (w_1, \ldots, w_n)\) to minimize
+        $$
+        loss(\mathbf{w}) = \sum_{j=1}^D (y_j - \mathbf{w} \cdot \phi(\mathbf{x}_j))^2
+        $$
+    </section>
+
+    <section>
+        <h2>Linear algebra to the rescue</h2>
+        $$
+        X = (\mathbf{x}_1, \ldots, \mathbf{x}_D), \mathbf{y} = (y_1, \ldots, y_D)^T
+        $$
+        Then
+        $$\mathbf{w} = (X^TX)^{-1}X^T\mathbf{y}$$
+        minimizes $$\|X\mathbf{w} - \mathbf{y}\|_2^2$$
+    </section>
+
+    <section>
+        <h2>Calculus to the rescue</h2>
+        $$ \nabla_{\mathbf{w}}loss = \sum_{j=1}^D (\mathbf{w} \cdot \phi(x_j) - y_j) \phi(x_j) $$
+        So iterate the following step until \(\mathbf{w}\) converges:
+        $$\mathbf{w} = \mathbf{w} - \alpha \nabla_{\mathbf{w}}loss$$
+    </section>
+</section>
+
+<section>
+
+    <section>
+        <h2>A Naive Approach</h2>
+
+        <ul>
+            <li>
+                Create a bunch of basis functions
+            </li>
+            <li>
+                Fit model with very low error
+            </li>
+            <li>
+                Realize model overfits data
+            </li>
+        </ul>
+    </section>
+    <section>
+        <plot-model model-data="modelData"></plot-model>
+        {{modelData}}
+    </section>
+</section>
+
+<section>
+
+    <h2>A Less Naive Approach</h2>
 
     <ul>
         <li>
-            Given data \(\{(y_1, \mathbf{x}_1),\ldots,(y_D, \mathbf{x}_D)\}\), find weights
-            \(\mathbf{w} = (w_1, \ldots, w_N)\) to minimize
-            $$
-            loss(\mathbf{w}) = \sum_{j=1}^D (y_j - \mathbf{w} \cdot \mathbf{x}_j)^2
-            $$
+            Split data into training and testing sets
         </li>
         <li>
-            How is this loss function motivated?
+            Create a bunch of basis functions
+        </li>
+        <li>
+            Fit model on subset of basis functions and the training data
+        </li>
+        <li>
+            Choose model with smallest testing error
         </li>
     </ul>
+
 </section>
 
+<section>
+
+    <h2>A Typical Approach</h2>
+
+    <ul>
+        <li>
+            Split data into training and testing sets
+        </li>
+        <li>
+            Create a bunch of basis functions
+        </li>
+        <li>
+            Choose weights to minimize either squared training error or
+            $$ \sum_{j=1}^D (y_j - \mathbf{w} \cdot \phi(\mathbf{x}_j))^2 + C\|\mathbf{w}\|_2^2 $$
+            or
+            $$ \sum_{j=1}^D (y_j - \mathbf{w} \cdot \phi(\mathbf{x}_j))^2 + C\|\mathbf{w}\|_1 $$
+        </li>
+    </ul>
+
+</section>
+
+<section>
+
+    <h2>A Typical Approach</h2>
+    <pre><code>
+        errors = []
+        for penalty in (None, 'l1', 'l2'):
+        for constant in (0.001, 0.03, 0.1, 0.3, 1):
+        model = linear_regression.fit(training_data, penalty, constant)
+        errors.append(
+        sum(
+        model.fit(testing_data.features) - testing_data.labels
+        ) ** 2
+        )
+    </code></pre>
+</section>
 
 <section>
 
@@ -171,6 +270,15 @@
         Something something something central limit theorem. Analytically tractable.  Gives least squares.
     </section>
 
+</section>
+
+<section ng-click="cycleData()" ng-blur="restoreDefaults()">
+    <plot-points point-data="data"></plot-points>
+    <div>
+        {{parameters.trainingPoints}} points drawn from
+        <br>
+        <span mathjax-bind="latexGenFunc"></span>
+    </div>
 </section>
 
 <section>
@@ -225,37 +333,18 @@
 </section>
 
 <section>
-
-    <section>
-        <h2>More priors</h2>
-        Using Bayes' theorem
-        $$
-        p(\mathbf{w} | \mathscr{D}, \tau) \propto p(\mathscr{D} | \mathbf{w}, \tau) p(\mathbf{w}| \tau)
-        $$
-        <br>
-        $$
-        \begin{align}
-        -\log{\left(p(\mathbf{w} | \mathscr{D}, \tau)\right)} &\propto -\log{\left(p(\mathscr{D} | \mathbf{w}, \tau)\right)} - \log{\left(p(\mathbf{w}, \tau)\right)} \\
-        &= \frac{\sum (y_j - \mathbf{w} \cdot \mathbf{x}_j)^2}{2 \sigma^2} - \log{\left(p(\mathbf{w}, \tau)\right)}
-        \end{align}
-        $$
-    </section>
-
-    <section>
-        <h2>The \(\ell^p\) norm</h2>
-        <ul>
-            <li>
-                For a vector \(\mathbf{x} = \{x_1, \ldots, x_N\}\), the \(\ell^p\)-norm of \(\mathbf{x}\) is
-                $$
-                \|\mathbf{x}\|_p = \left(\sum_{j=1}^N |x_j|^p\right)^{\frac{1}{p}}
-                $$
-            </li>
-            <li>
-                \(\|\mathbf{x}\|_1\) is the sum of the absolute values
-            </li>
-        </ul>
-    </section>
-
+    <h2>More priors</h2>
+    Using Bayes' theorem
+    $$
+    p(\mathbf{w} | \mathscr{D}, \tau) \propto p(\mathscr{D} | \mathbf{w}, \tau) p(\mathbf{w}| \tau)
+    $$
+    <br>
+    $$
+    \begin{align}
+    -\log{\left(p(\mathbf{w} | \mathscr{D}, \tau)\right)} &\propto -\log{\left(p(\mathscr{D} | \mathbf{w}, \tau)\right)} - \log{\left(p(\mathbf{w}, \tau)\right)} \\
+    &= \frac{\sum (y_j - \mathbf{w} \cdot \mathbf{x}_j)^2}{2 \sigma^2} - \log{\left(p(\mathbf{w}, \tau)\right)}
+    \end{align}
+    $$
 </section>
 
 <section>
@@ -273,7 +362,7 @@
     p(\mathbf{w}, \tau) \propto \exp{\left(-\frac{\|\mathbf{w}\|_1}{\tau}\right)}
     $$
     $$
-    loss(w) = \|\mathbf{y} - \mathbf{X}\mathbf{w}^T\|^2 + \frac{2\sigma^2}{\tau}\|\mathbf{w}\|_2^2
+    loss(w) = \|\mathbf{y} - \mathbf{X}\mathbf{w}^T\|^2 + \frac{2\sigma^2}{\tau}\|\mathbf{w}\|_1
     $$
 </section>
 

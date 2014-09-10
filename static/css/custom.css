@@ -20,4 +20,11 @@ div .eqnbox{
 
 .dot {
   stroke: none;
+    fill: #FF5200;
+}
+
+.line {
+  fill: none;
+  stroke: #FF5200;
+  stroke-width: 3px;
 }
