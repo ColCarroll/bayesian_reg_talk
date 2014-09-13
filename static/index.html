@@ -21,7 +21,7 @@
     <!-- AngularJS -->
     <script type="text/javascript" src="/js/underscore.min.js"></script>
     <script type="text/javascript" src="/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/angular.min.js"></script>
+    <script type="text/javascript" src="/js/angular.js"></script>
 
     <!-- Talk -->
     <link rel="stylesheet" type="text/css" href="/css/custom.css" />
@@ -167,50 +167,77 @@
         </ul>
     </section>
     <section>
-        <plot-model model-data="modelData"></plot-model>
-        {{modelData}}
+        <div>
+            <plot-model model-point="trainModel" model-line="plotModel" ng-click="cycleModel()" width="760" height="500"></plot-model>
+        </div>
+        <div>
+            Degree: <input type="number" min="1" step="1" ng-model="mParms.num_basis" ng-change="updateModel('num_basis', mParms.num_basis)">
+        </div>
+        <div>Mean Squared Error: {{errors.train.toFixed(5)}}</div>
     </section>
 </section>
 
 <section>
 
-    <h2>A Less Naive Approach</h2>
+    <section>
+        <h2>A Less Naive Approach</h2>
 
-    <ul>
-        <li>
-            Split data into training and testing sets
-        </li>
-        <li>
-            Create a bunch of basis functions
-        </li>
-        <li>
-            Fit model on subset of basis functions and the training data
-        </li>
-        <li>
-            Choose model with smallest testing error
-        </li>
-    </ul>
+        <ul>
+            <li>
+                Split data into training and testing sets
+            </li>
+            <li>
+                Create a bunch of basis functions
+            </li>
+            <li>
+                Fit model on subset of basis functions and the training data
+            </li>
+            <li>
+                Choose model with smallest testing error
+            </li>
+        </ul>
+    </section>
+    <section>
+        <div>
+            <plot-model model-point="trainModel" model-line="plotModel" ng-click="cycleModel()" width="350" height="250"></plot-model>
+            <plot-model model-point="testModel" model-line="plotModel" ng-click="cycleModel()" width="350" height="250"></plot-model>
+        </div>
+        <div>
+            Degree: <input type="number" min="1" step="1" ng-model="mParms.num_basis" ng-change="updateModel('num_basis', mParms.num_basis)">
+        </div>
+        <div>
+            Mean Squared Train Error: {{errors.train.toFixed(5)}}
+            <br>
+            Mean Squared Test Error: {{errors.test.toFixed(5)}}
+        </div>
+    </section>
 
 </section>
 
 <section>
 
-    <h2>A Typical Approach</h2>
+    <section>
+        <h2>A Typical Approach</h2>
 
-    <ul>
-        <li>
-            Split data into training and testing sets
-        </li>
-        <li>
-            Create a bunch of basis functions
-        </li>
-        <li>
-            Choose weights to minimize either squared training error or
-            $$ \sum_{j=1}^D (y_j - \mathbf{w} \cdot \phi(\mathbf{x}_j))^2 + C\|\mathbf{w}\|_2^2 $$
-            or
-            $$ \sum_{j=1}^D (y_j - \mathbf{w} \cdot \phi(\mathbf{x}_j))^2 + C\|\mathbf{w}\|_1 $$
-        </li>
-    </ul>
+        <ul>
+            <li>
+                Split data into training and testing sets
+            </li>
+            <li>
+                Create a bunch of basis functions
+            </li>
+            <li>
+                Choose weights to minimize either squared training error or
+                $$ \sum_{j=1}^D (y_j - \mathbf{w} \cdot \phi(\mathbf{x}_j))^2 + C\|\mathbf{w}\|_2^2 $$
+                or
+                $$ \sum_{j=1}^D (y_j - \mathbf{w} \cdot \phi(\mathbf{x}_j))^2 + C\|\mathbf{w}\|_1 $$
+            </li>
+        </ul>
+    </section>
+    <section>
+        <img src="error_contour.png">
+
+    </section>
 
 </section>
 
@@ -230,6 +257,7 @@
     </code></pre>
 </section>
 
+
 <section>
 
     <section>
@@ -237,13 +265,13 @@
         <h2>Motivating Loss Function</h2>
         <div class="eqnbox">
             <br>
-            $$y(\mathbf{x}, \mathbf{w}) = \mathbf{w} \cdot \mathbf{x} + \mathscr{N}(0, \sigma^2)$$
+            $$y(\mathbf{x}, \mathbf{w}) = \mathbf{w} \cdot \phi(\mathbf{x}) + \mathscr{N}(0, \sigma^2)$$
             <br>
         </div>
         The <em>likelihood</em> is given by
         <div class="eqnbox">
             <br>
-            $$p(y | \mathbf{x}, \mathbf{w}) \propto \exp{\left(-\frac{(y - \mathbf{w} \cdot \mathbf{x})^2}{2 \sigma^2}\right)}$$
+            $$p(y | \mathbf{x}, \mathbf{w}) \propto \exp{\left(-\frac{(y - \mathbf{w} \cdot \phi(\mathbf{x}))^2}{2 \sigma^2}\right)}$$
             <br>
         </div>
     </section>

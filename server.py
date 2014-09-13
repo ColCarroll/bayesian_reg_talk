@@ -2,7 +2,7 @@ import os
 import numpy
 import numpy.random
 from sklearn import linear_model
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect, url_for
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__, static_url_path='')
@@ -94,8 +94,8 @@ class Model:
         self._data = {
             "x": {
                 "plot": numpy.linspace(-1, 1, 250),
-                "train": 2 * numpy.random.random(self._training_points) - 1,
-                "test": 2 * numpy.random.random(self._testing_points) - 1,
+                "train": numpy.sort(2 * numpy.random.random(self._training_points) - 1),
+                "test": numpy.sort(2 * numpy.random.random(self._testing_points) - 1),
             }}
         self._data["y"] = {key: self._func(value) + self._noise * numpy.random.normal(0, 1, len(value)) for key, value
                            in self._data["x"].iteritems()}
@@ -134,15 +134,10 @@ class Model:
             ).mean()
 
     def json(self):
-        json_data = {}
-        for key1, value1 in self._data.iteritems():
-            json_data[key1] = {}
-            for key2, value2 in value1.iteritems():
-                try:
-                    json_data[key1][key2] = list(value2)
-                except TypeError:
-                    json_data[key1][key2] = value2
-        return jsonify(json_data)
+        json_data = {key: zip(self._data["x"][key], self._data["y"][key]) for key in ("train", "test")}
+        json_data["plot"] = zip(self._data["x"]["plot"], self._data["y_pred"]["plot"])
+        json_data["errors"] = self._data["errors"]
+        return json_data
 
 
 MODEL = Model()
@@ -156,11 +151,12 @@ def index():
 @app.route('/update')
 def update():
     MODEL.update(request.args)
+    return redirect(url_for("get"))
 
 @app.route('/data')
 def get():
-    return MODEL.json()
+    return jsonify(MODEL.json())
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8080)
